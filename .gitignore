@@ -6,4 +6,4 @@
 
 # Ignore Bower assets
 /bower_components/*
-
+/node_modules/*
