@@ -300,11 +300,13 @@ shortDate:"M/d/yy",shortTime:"h:mm a"},NUMBER_FORMATS:{CURRENCY_SYM:"$",DECIMAL_
 !window.angular.$$csp().noInlineStyle&&window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 //# sourceMappingURL=angular.min.js.map
 ;'use strict';
-angular.module('confusionApp', []).controller('menuController', function() {
-  this.tab = 1;
-  this.filtText = '';
+
+angular.module('confusionApp', []).controller('MenuController', ['$scope', function($scope) {
+  $scope.tab = 1;
+  $scope.filtText = '';
+  $scope.showDetails = false;
   
-  var dishes = [
+  $scope.dishes = [
     {
       name:'Uthapizza',
       image: 'images/uthapizza.png',
@@ -346,26 +348,27 @@ angular.module('confusionApp', []).controller('menuController', function() {
     }
   ]; 
   
-  this.dishes = dishes;
-
-  this.select = function(setTab) {
-    this.tab = setTab;
+  $scope.select = function(setTab) {
+    $scope.tab = setTab;
     
     if (setTab === 2) {
-      this.filtText = "appetizer";
+      $scope.filtText = "appetizer";
     } 
     else if (setTab === 3) {
-      this.filtText = "mains";
+      $scope.filtText = "mains";
     }
     else if (setTab === 4) {
-      this.filtText = "dessert";
+      $scope.filtText = "dessert";
     }
     else {
-      this.filtText = "";
+      $scope.filtText = "";
     }
   };
   
-  this.isSelected = function (checkTab) {
-    return (this.tab === checkTab);
+  $scope.isSelected = function (checkTab) {
+    return ($scope.tab === checkTab);
   };
-});
+  $scope.toggleDetails = function() {
+    $scope.showDetails = !$scope.showDetails;
+  };
+}]);

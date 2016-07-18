@@ -47,8 +47,6 @@ angular.module('confusionApp', []).controller('MenuController', ['$scope', funct
     }
   ]; 
   
-  $scope.dishes;
-
   $scope.select = function(setTab) {
     $scope.tab = setTab;
     
