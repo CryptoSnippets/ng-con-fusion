@@ -30,10 +30,22 @@ module.exports = function (grunt) {
     },
 
 useminPrepare: {
-  html: 'app/menu.html',
+  html: 'app/*.html',
   options: {
     dest: 'dist'
   }
+},
+
+// ngAnnotate
+ngAnnotate: {
+    options: {
+        singleQuotes: true
+    },
+    app: {
+        files: {
+            'app/min-safe/app.js': ['app/scripts/app.js']
+        }
+    }
 },
 
 // Concat
@@ -47,12 +59,23 @@ concat: {
 },
 
 // Uglify
-uglify: {
+// uglify: {
   // dist configuration is provided by useminPrepare
-  dist: {}
+  // dist: {}
+// },
+
+uglify: {
+    js: {
+        src: ['app/min-safe/app.js', 'app/min-safe/js/*.js'],
+        dest: 'dist/scripts/app.js'
+    }
 },
 
 cssmin: {
+    options: {
+    rebase: false,
+    keepSpecialComments: '0'
+  },
   dist: {}
 },
 
@@ -91,7 +114,7 @@ usemin: {
 copy: {
   dist: {
     cwd: 'app',
-    src: [ '**','!styles/**/*.css','!scripts/**/*.js' ],
+    src: [ '**','!styles/**/*.css','!scripts/**/*.js', '!**/min-safe/**' ],
     dest: 'dist',
     expand: true
   },
@@ -179,6 +202,7 @@ grunt.registerTask('build', [
   'clean',
   'jshint',
   'useminPrepare',
+  'ngAnnotate',
   'concat',
   'cssmin',
   'uglify',
@@ -188,7 +212,7 @@ grunt.registerTask('build', [
 ]);
 
 	grunt.registerTask('serve',['build','connect:dist','watch']);
-	grunt.registerTask('default',['build']);
+	grunt.registerTask('default',['build','ngAnnotate']);
 
 };
 
