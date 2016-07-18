@@ -70,4 +70,7 @@ angular.module('confusionApp', []).controller('MenuController', ['$scope', funct
   $scope.toggleDetails = function() {
     $scope.showDetails = !$scope.showDetails;
   };
-}]);
+}])
+
+
+;
