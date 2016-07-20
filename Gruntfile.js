@@ -30,7 +30,7 @@ module.exports = function (grunt) {
     },
 
 useminPrepare: {
-  html: 'app/*.html',
+  html: 'app/menu.html',
   options: {
     dest: 'dist'
   }
@@ -65,6 +65,10 @@ concat: {
 // },
 
 uglify: {
+    options: {
+    rebase: false,
+    keepSpecialComments: 1
+  },
     js: {
         src: ['app/min-safe/app.js', 'app/min-safe/js/*.js'],
         dest: 'dist/scripts/app.js'
@@ -74,7 +78,7 @@ uglify: {
 cssmin: {
     options: {
     rebase: false,
-    keepSpecialComments: '0'
+    keepSpecialComments: 1
   },
   dist: {}
 },
