@@ -30,7 +30,7 @@ module.exports = function (grunt) {
     },
 
 useminPrepare: {
-  html: 'app/menu.html',
+  html: 'app/*.html',
   options: {
     dest: 'dist'
   }
@@ -43,7 +43,9 @@ ngAnnotate: {
     },
     app: {
         files: {
-            'app/min-safe/app.js': ['app/scripts/app.js']
+            '.tmp/concat/scripts/app.js': ['app/scripts/app.js'],
+            '.tmp/concat/scripts/controllers.js': ['app/scripts/controllers.js'],
+            '.tmp/concat/scripts/services.js': ['app/scripts/services.js']
         }
     }
 },
@@ -66,13 +68,11 @@ concat: {
 
 uglify: {
     options: {
+    mangle: false,
     rebase: false,
     keepSpecialComments: 1
   },
-    js: {
-        src: ['app/min-safe/app.js', 'app/min-safe/js/*.js'],
-        dest: 'dist/scripts/app.js'
-    }
+    js: {}
 },
 
 cssmin: {
@@ -118,7 +118,8 @@ usemin: {
 copy: {
   dist: {
     cwd: 'app',
-    src: [ '**','!styles/**/*.css','!scripts/**/*.js', '!**/min-safe/**' ],
+    src: [ '**','!styles/**/*.css','!scripts/**', '!**/min-safe/**' ],
+    // src: [ '**','!styles/**/*.css','!scripts/**/*.js', '!**/min-safe/**' ],
     dest: 'dist',
     expand: true
   },
@@ -132,7 +133,7 @@ copy: {
         cwd: 'bower_components/bootstrap/dist',
         src: ['fonts/*.*'],
         dest: 'dist'
-      }, {
+      },{
         //for font-awesome
         expand: true,
         dot: true,
@@ -187,7 +188,7 @@ connect: {
       base:{
         path: 'dist',
         options: {
-          index: 'menu.html',
+          index: 'index.html',
           maxAge: 300000
         }
       }
