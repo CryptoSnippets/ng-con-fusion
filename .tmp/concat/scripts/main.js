@@ -326,39 +326,44 @@ a.get("$state.runtime").autoinject&&a.get("$state")}]),w.$inject=[],b.module("ui
 angular.module('confusionApp', ['ui.router'])
 .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
-                    // route for the home page
+        
+            // route for the home page
             .state('app', {
                 url:'/',
                 views: {
                     'header': {
-                        templateUrl : 'views/header.html'
+                        templateUrl : 'views/header.html',
                     },
                     'content': {
-                        template : '<h1>To be Completed</h1>',
-                        controller  : 'MenuController'
+                        templateUrl : 'views/home.html',
+                        controller  : 'IndexController'
                     },
                     'footer': {
-                        templateUrl : 'views/footer.html'
+                        templateUrl : 'views/footer.html',
                     }
                 }
+
             })
-                    // route for the aboutus page
+        
+            // route for the aboutus page
             .state('app.aboutus', {
                 url:'aboutus',
                 views: {
                     'content@': {
-                        template: '<h1>To be Completed</h1>'
-                   }
+                        templateUrl : 'views/aboutus.html',
+                        controller  : 'AboutController'                  
+                    }
                 }
             })
-                    // route for the contactus page
+        
+            // route for the contactus page
             .state('app.contactus', {
                 url:'contactus',
                 views: {
                     'content@': {
                         templateUrl : 'views/contactus.html',
-                        controller  : 'ContactController'
-                     }
+                        controller  : 'ContactController'                  
+                    }
                 }
             })
 
@@ -383,10 +388,9 @@ angular.module('confusionApp', ['ui.router'])
                    }
                 }
             });
-            $urlRouterProvider.otherwise('/');
+    
+        $urlRouterProvider.otherwise('/');
     })
-
-
 ;
 ;'use strict';
 
@@ -399,6 +403,7 @@ angular.module('confusionApp')
             $scope.showDetails = false;
 
             $scope.dishes= menuFactory.getDishes();
+
                         
             $scope.select = function(setTab) {
                 $scope.tab = setTab;
@@ -458,10 +463,12 @@ angular.module('confusionApp')
         }])
 
         .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function($scope, $stateParams, menuFactory) {
-            var dish= menuFactory.getDish(parseInt($stateParams.id,10));
-                        $scope.dish = dish;
-                    }])
 
+            var dish= menuFactory.getDish(parseInt($stateParams.id,10));
+            
+            $scope.dish = dish;
+            
+        }])
 
         .controller('DishCommentController', ['$scope', function($scope) {
 
@@ -486,20 +493,35 @@ angular.module('confusionApp')
                 console.log($scope.comment);
             };
         }])
+
+        // implement the IndexController and About Controller here
+        .controller('IndexController', ['$scope', 'menuFactory', 'corporateFactory', function($scope, menuFactory, corporateFactory) {
+            // body...
+            $scope.dish = menuFactory.getDish(0);
+            $scope.promotion = menuFactory.getPromotion(0);
+            $scope.leader = corporateFactory.getLeader(3);
+            
+        }])
+
+        .controller('AboutController', ['$scope', 'corporateFactory', function($scope, corporateFactory) {
+            $scope.leaders = corporateFactory.getLeaders(0);
+        }])
+
+
 ;
 ;'use strict';
 
 angular.module('confusionApp')
 
         .service('menuFactory', function() {
-
+    
             var dishes=[
                          {
-                         	_id:0,
+                          _id:0,
                           name:'Uthapizza',
                           image: 'images/uthapizza.png',
-                          category: 'mains',
-                           label:'Hot',
+                          category: 'mains', 
+                          label:'Hot',
                           price:'4.99',
                           description:'A unique combination of Indian Uthappam (pancake) and Italian pizza, topped with Cerignola olives, ripe vine cherry tomatoes, Vidalia onion, Guntur chillies and Buffalo Paneer.',
                            comments: [
@@ -532,14 +554,16 @@ angular.module('confusionApp')
                                    comment:"It's your birthday, we're gonna party!",
                                    author:"25 Cent",
                                    date:"2011-12-02T17:57:28.556094Z"
-                               }                                                          ]
+                               }
+                               
+                           ]
                         },
                         {
-                        	_id:1,
-                          name:'Zucchipakoda',
-                           image: 'images/zucchipakoda.png',
-                          category: 'appetizer',
-                           label:'',
+                          _id:1,
+                          name:'Zucchipakoda', 
+                          image: 'images/zucchipakoda.png',
+                          category: 'appetizer', 
+                          label:'',
                           price:'1.99',
                           description:'Deep fried Zucchini coated with mildly spiced Chickpea flour batter accompanied with a sweet-tangy tamarind sauce',
                           comments: [
@@ -572,14 +596,16 @@ angular.module('confusionApp')
                                    comment:"It's your birthday, we're gonna party!",
                                    author:"25 Cent",
                                    date:"2011-12-02T17:57:28.556094Z"
-                               }                                                          ]
+                               }
+                               
+                           ]
                         },
                         {
-                        	_id:2,
-                          name:'Vadonut',
-                           image: 'images/vadonut.png',
-                          category: 'appetizer',
-                           label:'New',
+                          _id:2,
+                          name:'Vadonut', 
+                          image: 'images/vadonut.png',
+                          category: 'appetizer', 
+                          label:'New',
                           price:'1.99',
                           description:'A quintessential ConFusion experience, is it a vada or is it a donut?',
                            comments: [
@@ -613,14 +639,15 @@ angular.module('confusionApp')
                                    author:"25 Cent",
                                    date:"2011-12-02T17:57:28.556094Z"
                                }
-                                                          ]
+                               
+                           ]
                         },
                         {
-                        	_id:3,
-                          name:'ElaiCheese Cake',
-                           image: 'images/elaicheesecake.png',
-                          category: 'dessert',
-                           label:'',
+                          _id:3,
+                          name:'ElaiCheese Cake', 
+                          image: 'images/elaicheesecake.png',
+                          category: 'dessert', 
+                          label:'',
                           price:'2.99',
                           description:'A delectable, semi-sweet New York Style Cheese Cake, with Graham cracker crust and spiced with Indian cardamoms',
                            comments: [
@@ -653,15 +680,91 @@ angular.module('confusionApp')
                                    comment:"It's your birthday, we're gonna party!",
                                    author:"25 Cent",
                                    date:"2011-12-02T17:57:28.556094Z"
-                               }                                                          ]
+                               }
+                               
+                           ]
                         }
                         ];
-            
+            var promotions = [
+                {
+                          _id:0,
+                          name:'Weekend Grand Buffet', 
+                          image: 'images/buffet.png',
+                          label:'New',
+                          price:'19.99',
+                          description:'Featuring mouthwatering combinations with a choice of five different salads, six enticing appetizers, six main entrees and five choicest desserts. Free flowing bubbly and soft drinks. All for just $19.99 per person ',
+                }
+                
+            ];
+    
                 this.getDishes = function(){
-                                        return dishes;
-                                    };
-                this.getDish = function (index) {
-                                    return dishes[index];
+                    
+                    return dishes;
+                    
                 };
+    
+                this.getDish = function (index) {
+                    
+                    return dishes[index];
+                };
+    
+                // implement a function named getPromotion
+                // that returns a selected promotion.
+                this.getPromotion = function(index) {
+                          return promotions[index];
+                };
+    
+                        
+        })
 
-        });
+        .factory('corporateFactory', function() {
+    
+            var corpfac = {};
+    
+            var leadership = [
+                {
+                    name: "Peter Pan",
+                    image: 'images/alberto.png',
+                    designation: "Chief Epicurious Officer",
+                    abbr: "CEO",
+                    description: "Our CEO, Peter, credits his hardworking East Asian immigrant parents who undertook the arduous journey to the shores of America with the intention of giving their children the best future. His mother's wizardy in the kitchen whipping up the tastiest dishes with whatever is available inexpensively at the supermarket, was his first inspiration to create the fusion cuisines for which The Frying Pan became well known. He brings his zeal for fusion cuisines to this restaurant, pioneering cross-cultural culinary connections."
+                },
+                {
+                    name: "Dhanasekaran Witherspoon",
+                    image: 'images/alberto.png',
+                    designation: "Chief Food Officer",
+                    abbr: "CFO",
+                    description: "Our CFO, Danny, as he is affectionately referred to by his colleagues, comes from a long established family tradition in farming and produce. His experiences growing up on a farm in the Australian outback gave him great appreciation for varieties of food sources. As he puts it in his own words, Everything that runs, wins, and everything that stays, pays!"
+                },
+                {
+                    name: "Agumbe Tang",
+                          image: 'images/alberto.png',
+                    designation: "Chief Taste Officer",
+                    abbr: "CTO",
+                    description: "Blessed with the most discerning gustatory sense, Agumbe, our CFO, personally ensures that every dish that we serve meets his exacting tastes. Our chefs dread the tongue lashing that ensues if their dish does not meet his exacting standards. He lives by his motto, You click only if you survive my lick."
+                },
+                {
+                    name: "Alberto Somayya",
+                    image: 'images/alberto.png',
+                    designation: "Executive Chef",
+                    abbr: "EC",
+                    description: "Award winning three-star Michelin chef with wide International experience having worked closely with whos-who in the culinary world, he specializes in creating mouthwatering Indo-Italian fusion experiences. He says, Put together the cuisines from the two craziest cultures, and you get a winning hit! Amma Mia!"
+                }
+                
+            ];
+     
+            // Implement two functions, one named getLeaders,
+            // the other named getLeader(index)
+            // Remember this is a factory not a service
+            corpfac.getLeaders = function() {
+                          return leadership;
+            };
+            corpfac.getLeader = function(index) {
+                          return leadership[index];
+            };
+            return corpfac;
+    
+    
+        })
+
+;

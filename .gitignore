@@ -7,3 +7,8 @@
 # Ignore Bower assets
 /bower_components/*
 /node_modules/*
+/dist/*
+.tmp/*
+.gulpfile.js
+.gitignore
+.directory

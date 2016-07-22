@@ -9,6 +9,7 @@ angular.module('confusionApp')
             $scope.showDetails = false;
 
             $scope.dishes= menuFactory.getDishes();
+
                         
             $scope.select = function(setTab) {
                 $scope.tab = setTab;
@@ -68,10 +69,12 @@ angular.module('confusionApp')
         }])
 
         .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function($scope, $stateParams, menuFactory) {
-            var dish= menuFactory.getDish(parseInt($stateParams.id,10));
-                        $scope.dish = dish;
-                    }])
 
+            var dish= menuFactory.getDish(parseInt($stateParams.id,10));
+            
+            $scope.dish = dish;
+            
+        }])
 
         .controller('DishCommentController', ['$scope', function($scope) {
 
@@ -96,4 +99,19 @@ angular.module('confusionApp')
                 console.log($scope.comment);
             };
         }])
+
+        // implement the IndexController and About Controller here
+        .controller('IndexController', ['$scope', 'menuFactory', 'corporateFactory', function($scope, menuFactory, corporateFactory) {
+            // body...
+            $scope.dish = menuFactory.getDish(0);
+            $scope.promotion = menuFactory.getPromotion(0);
+            $scope.leader = corporateFactory.getLeader(3);
+            
+        }])
+
+        .controller('AboutController', ['$scope', 'corporateFactory', function($scope, corporateFactory) {
+            $scope.leaders = corporateFactory.getLeaders(0);
+        }])
+
+
 ;
