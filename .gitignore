@@ -12,3 +12,8 @@
 .gulpfile.js
 .gitignore
 .directory
+app/.DS_Store
+app/.directory
+.directory
+.jshintrc
+
