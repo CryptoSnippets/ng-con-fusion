@@ -3,16 +3,24 @@ describe('Controller: MenuController', function () {
   // load the controller's module
   beforeEach(module('confusionApp'));
 
-  var MenuController, scope, $httpBackend,menuFactory;
+  // Added these three following three lines
+  beforeEach(module(function ($urlRouterProvider) {
+      $urlRouterProvider.otherwise(function(){return false;});
+  }));
 
-});
+  var MenuController, scope, $httpBackend;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($injector,$controller, _$httpBackend_,  $rootScope, _menuFactory_) {
+  beforeEach(inject(function ($controller, _$httpBackend_,  $rootScope, menuFactory) {
 
           // place here mocked dependencies
-      $httpBackend = _$httpBackend_; 
-      menuFactory = $injector.get('menuFactory');                 
+      $httpBackend = _$httpBackend_;
+
+    // Added these three following three lines
+      $httpBackend.whenGET('views/header.html').respond();
+      $httpBackend.whenGET('views/home.html').respond();
+      $httpBackend.whenGET('views/footer.html').respond();
+
       $httpBackend.expectGET("http://localhost:3000/dishes").respond([
         {
       "id": 0,
@@ -44,7 +52,7 @@ describe('Controller: MenuController', function () {
 
   }));
 
-    it('should have showDetails as false', function () {
+  it('should have showDetails as false', function () {
 
     expect(scope.showDetails).toBeFalsy();
 
@@ -75,3 +83,6 @@ describe('Controller: MenuController', function () {
       expect(scope.filtText).toEqual('mains');
 
   });
+
+
+});

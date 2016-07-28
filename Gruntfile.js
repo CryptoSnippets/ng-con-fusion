@@ -152,7 +152,7 @@ watch: {
   },
   
   scripts: {
-    files: ['app/scripts/app.js'],
+    files: ['app/scripts/*.js'],
     tasks:[ 'build']
   },
   
@@ -176,7 +176,7 @@ watch: {
 
 connect: {
   options: {
-    port: 9000,
+    port: 9001,
     // Change this to '0.0.0.0' to access the server from outside.
     hostname: 'localhost',
     livereload: 35729
